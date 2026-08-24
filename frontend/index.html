@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Spectrapur — Spectral Denoising for Researchers</title>
+<meta name="description" content="Upload raw spectral data and get a denoised, baseline-corrected spectrum in seconds, powered by ResUNet1D." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ============================= NAV ============================= -->
+<nav class="topnav">
+  <div class="wrap">
+    <a class="brand" href="#top">
+      <svg class="brand-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="32" height="32" rx="8" fill="#10233F"/>
+        <path d="M4 20 L9 20 L11 12 L14 24 L17 8 L20 20 L23 15 L28 15" stroke="#A9CCE8" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Spectrapur
+    </a>
+    <ul class="nav-links">
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#workspace">Denoise data</a></li>
+      <li><a href="#model">The model</a></li>
+    </ul>
+    <a class="btn btn-primary btn-sm" href="#workspace">Open workspace</a>
+  </div>
+</nav>
+
+<!-- ============================= HERO ============================= -->
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-copy">
+      <span class="eyebrow">Spectral denoising · ResUNet1D</span>
+      <h1>Turn noisy spectra into <em>publication-ready</em> data.</h1>
+      <p class="lede">
+        Spectrapur removes noise, baseline drift, and spike artifacts from raw spectral
+        measurements using a residual 1D U-Net trained specifically to protect peak
+        position, shape, and intensity — the details your analysis depends on.
+      </p>
+      <div class="hero-actions">
+        <a href="#workspace" class="btn btn-primary">Denoise your data</a>
+        <button class="btn btn-ghost" id="hero-sample-btn">Try a sample spectrum</button>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="num">1D ResUNet</span>
+          <span class="label">Residual U-Net architecture</span>
+        </div>
+        <div class="hero-stat">
+          <span class="num">20+</span>
+          <span class="label">Spectral loss terms in training</span>
+        </div>
+        <div class="hero-stat">
+          <span class="num">Peak-aware</span>
+          <span class="label">Fingerprint-region fidelity</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="trace-card" aria-hidden="true">
+      <div class="trace-label">
+        <span>live_spectrum.csv</span>
+        <span>1868 pts</span>
+      </div>
+      <svg viewBox="0 0 400 170" preserveAspectRatio="none">
+        <polyline class="trace-noisy" points="0,110 8,95 16,120 24,88 32,130 40,100 48,140 56,90 64,118 72,80 80,125 88,70 96,60 104,95 112,40 120,75 128,30 136,60 144,20 152,55 160,10 168,45 176,25 184,70 192,55 200,90 208,60 216,100 224,75 232,120 240,85 248,130 256,95 264,60 272,110 280,50 288,85 296,30 304,65 312,15 320,50 328,20 336,55 344,35 352,80 360,60 368,100 376,75 384,120 392,95 400,110"/>
+        <polyline class="trace-clean" points="0,112 20,108 40,102 60,100 80,105 100,95 120,70 140,55 160,42 180,55 200,90 220,95 240,100 260,90 280,60 300,45 320,35 340,50 360,80 380,100 400,108"/>
+      </svg>
+      <div class="trace-caption">
+        <span><span class="legend-dot" style="background:#A9CCE8"></span>Raw signal</span>
+        <span><span class="legend-dot" style="background:#F8F0E0"></span>Denoised</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============================= HOW IT WORKS ============================= -->
+<section class="how" id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Workflow</span>
+      <h2>Three steps, no setup</h2>
+      <p class="lede">Bring your own spectrum — no model install, no environment to configure.</p>
+    </div>
+    <div class="how-grid">
+      <div class="how-card">
+        <span class="step">01</span>
+        <h3>Upload your spectrum</h3>
+        <p>Drop in a CSV or TXT file (one or two columns), or paste values directly. Any length is accepted.</p>
+      </div>
+      <div class="how-card">
+        <span class="step">02</span>
+        <h3>Model denoises it</h3>
+        <p>Your data is resampled and passed through ResUNet1D, which removes noise, spikes, and baseline drift while preserving peak fidelity.</p>
+      </div>
+      <div class="how-card">
+        <span class="step">03</span>
+        <h3>Inspect &amp; export</h3>
+        <p>Compare raw vs. denoised traces, review detected peaks and noise metrics, then download the cleaned data.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= WORKSPACE ============================= -->
+<section id="workspace">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Workspace</span>
+      <h2>Denoise a spectrum</h2>
+      <p class="lede">Accepted formats: <code>.csv</code>, <code>.txt</code>, <code>.tsv</code> — either a single intensity column, or two columns of x (wavenumber / wavelength / index) and y (intensity).</p>
+    </div>
+
+    <div class="workspace-grid">
+      <div class="panel upload-panel">
+        <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Upload spectrum file">
+          <svg class="dropzone-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="M12 16V4M12 4L7 9M12 4l5 5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <h3>Drag &amp; drop your file here</h3>
+          <p>or click to browse — .csv, .txt, .tsv up to 10&nbsp;MB</p>
+          <input type="file" id="file-input" accept=".csv,.txt,.tsv" hidden />
+          <div id="file-chip-holder"></div>
+        </div>
+
+        <div class="upload-divider">or paste values</div>
+
+        <div class="paste-area">
+          <textarea id="paste-input" placeholder="wavenumber,intensity&#10;400,0.021&#10;404,0.024&#10;...&#10;(or a single column of intensity values)"></textarea>
+        </div>
+
+        <div class="upload-footer">
+          <div class="options">
+            <label><input type="checkbox" id="sample-toggle" /> Load a synthetic demo spectrum instead</label>
+          </div>
+          <div style="display:flex; gap:12px; align-items:center;">
+            <span class="status-line" id="status-line"></span>
+            <button class="btn btn-primary" id="run-btn">Run denoising</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================= RESULTS ============================= -->
+      <div id="results">
+        <div class="results-toolbar">
+          <div>
+            <span class="eyebrow">Results</span>
+            <h2 style="margin-top:6px;">Denoising complete</h2>
+          </div>
+          <div class="actions">
+            <button class="btn btn-soft btn-sm" id="download-csv">Download denoised CSV</button>
+            <button class="btn btn-soft btn-sm" id="download-report">Download analysis report</button>
+            <button class="btn btn-ghost btn-sm" id="download-png">Save chart as image</button>
+          </div>
+        </div>
+
+        <div class="stat-grid" id="stat-grid"></div>
+
+        <div class="panel chart-panel">
+          <div class="chart-panel-head">
+            <h3>Raw vs. denoised spectrum</h3>
+            <div class="chart-legend">
+              <span><span class="legend-dot" style="background:#A9CCE8"></span>Raw</span>
+              <span><span class="legend-dot" style="background:#10233F"></span>Denoised</span>
+            </div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="overlay-chart"></canvas>
+          </div>
+        </div>
+
+        <div class="results-two-col">
+          <div class="panel chart-panel">
+            <div class="chart-panel-head">
+              <h3>Noise removed (residual)</h3>
+              <div class="chart-legend">
+                <span><span class="legend-dot" style="background:#B3663F"></span>Raw − Denoised</span>
+              </div>
+            </div>
+            <div class="chart-wrap short">
+              <canvas id="residual-chart"></canvas>
+            </div>
+          </div>
+
+          <div class="panel peak-panel">
+            <h3>Detected peaks (denoised)</h3>
+            <p class="empty-note">Ranked by prominence, sorted along the x-axis.</p>
+            <div class="peak-scroll">
+              <table class="peak-table">
+                <thead>
+                  <tr><th>#</th><th>Position (x)</th><th>Intensity</th></tr>
+                </thead>
+                <tbody id="peak-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= MODEL / ABOUT ============================= -->
+<section class="how" id="model">
+  <div class="wrap about-grid">
+    <div>
+      <span class="eyebrow">Under the hood</span>
+      <h2>ResUNet1D, built for spectra</h2>
+      <p class="lede" style="margin-bottom:22px;">
+        Spectrapur is powered by a 1D Residual U-Net purpose-built for spectral denoising —
+        engineered to avoid the peak shifting and peak rounding that generic
+        image-style denoisers tend to introduce.
+      </p>
+      <ul class="about-list">
+        <li><span class="dot"></span> Multi-scale dilated context blocks capture both local peak shape and broader baseline structure.</li>
+        <li><span class="dot"></span> Attention-gated skip connections and squeeze-excite blocks calibrate which features pass through at each resolution.</li>
+        <li><span class="dot"></span> A spectral-attention module gives extra weight to the fingerprint region, where peak identity matters most.</li>
+        <li><span class="dot"></span> Trained with a composite loss covering peak alignment, curvature, slope, FFT topology, and amplitude fidelity — not just MSE.</li>
+      </ul>
+    </div>
+    <div class="panel credit-card">
+      <h3>Run it yourself</h3>
+      <p class="lede" style="margin-bottom:6px;">The model and inference code are open — see the original repository for training and evaluation scripts.</p>
+      <code>github.com/nabhya8013/spectral_denoise</code>
+      <p style="margin-top:18px; font-size:0.88rem; color:var(--ink-soft);">
+        This web app wraps that model behind a simple API: your spectrum is resampled,
+        normalized, denoised, and mapped back to your original axis — all in one request.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= FOOTER ============================= -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <a class="brand" href="#top">
+        <svg class="brand-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#A9CCE8"/>
+          <path d="M4 20 L9 20 L11 12 L14 24 L17 8 L20 20 L23 15 L28 15" stroke="#10233F" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Spectrapur
+      </a>
+      <div style="display:flex; gap:24px; font-size:0.9rem;">
+        <a href="#how">How it works</a>
+        <a href="#workspace">Workspace</a>
+        <a href="#model">Model</a>
+      </div>
+    </div>
+    <div class="foot-note">
+      <span>Spectrapur — a spectral denoising workspace for researchers and students.</span>
+      <span>Model: ResUNet1D (nabhya8013/spectral_denoise)</span>
+    </div>
+  </div>
+</footer>
+
+<div id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
