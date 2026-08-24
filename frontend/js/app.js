@@ -278,6 +278,14 @@
   }
 
   function renderCharts(data) {
+    function renderCharts(data) {
+    if (typeof Chart === "undefined") {
+      document.querySelectorAll(".chart-wrap").forEach((el) => {
+        el.innerHTML =
+          '<p class="empty-note" style="padding-top:20px;">Charting library failed to load from the CDN. Check your network/ad-blocker, then refresh and re-run.</p>';
+      });
+      return;
+    }
     const { x, y1: yNoisy, y2: yDenoised } = downsampleForChart(data.x, data.y_noisy, data.y_denoised);
     const { y1: yResidual } = downsampleForChart(data.x, data.residual, null);
 
