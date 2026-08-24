@@ -5,8 +5,12 @@ window.addEventListener("error", function (e) {
 (function () {
   "use strict";
 
-  const API_BASE = window.SPECTRAPUR_CONFIG.API_BASE_URL;
-  const MAX_MB = window.SPECTRAPUR_CONFIG.MAX_FILE_SIZE_MB;
+  const CFG = window.SPECTRAPUR_CONFIG || {};
+  const API_BASE = CFG.API_BASE_URL || "https://spectrapur-api.onrender.com";
+  const MAX_MB = CFG.MAX_FILE_SIZE_MB || 10;
+  if (!window.SPECTRAPUR_CONFIG) {
+    console.warn("Spectrapur: js/config.js did not load — using fallback API_BASE_URL:", API_BASE);
+  }
 
   // ---- DOM references ----
   const dropzone = document.getElementById("dropzone");
