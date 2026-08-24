@@ -1,6 +1,7 @@
 # Spectrapur
 
 Live Web App: https://spectrapur.vercel.app/
+
 A web app for denoising raw spectral data, built on the **ResUNet1D** model from
 [`nabhya8013/spectral_denoise`](https://github.com/nabhya8013/spectral_denoise).
 
