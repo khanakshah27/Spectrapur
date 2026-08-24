@@ -36,10 +36,7 @@ from inference.denoiser import denoise_spectrum, get_model
 
 app = Flask(__name__)
 
-# Allow the deployed frontend (Vercel) plus local dev to call this API.
-# Set ALLOWED_ORIGINS as a comma-separated env var in production, e.g.
-#   ALLOWED_ORIGINS=https://spectrapur.vercel.app,http://localhost:5173
-_allowed = os.getenv("ALLOWED_ORIGINS", "*")
+_allowed = os.getenv("ALLOWED_ORIGINS", "https://spectrapur.vercel.app/")
 _origins = "*" if _allowed.strip() == "*" else [o.strip() for o in _allowed.split(",")]
 CORS(app, resources={r"/api/*": {"origins": _origins}})
 
