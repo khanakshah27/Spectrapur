@@ -307,7 +307,6 @@ window.addEventListener("error", function (e) {
   }
 
   function renderCharts(data) {
-    function renderCharts(data) {
     if (typeof Chart === "undefined") {
       document.querySelectorAll(".chart-wrap").forEach((el) => {
         el.innerHTML =
