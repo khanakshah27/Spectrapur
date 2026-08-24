@@ -210,21 +210,37 @@
 
 <!-- ============================= MODEL / ABOUT ============================= -->
 <section class="how" id="model">
-  <div class="wrap about-grid">
-    <div>
+  <div class="wrap">
+    <div class="section-head">
       <span class="eyebrow">Under the hood</span>
       <h2>ResUNet1D, built for spectra</h2>
-      <p class="lede" style="margin-bottom:22px;">
+      <p class="lede">
         Spectrapur is powered by a 1D Residual U-Net purpose-built for spectral denoising —
         engineered to avoid the peak shifting and peak rounding that generic
         image-style denoisers tend to introduce.
       </p>
-      <ul class="about-list">
-        <li><span class="dot"></span> Multi-scale dilated context blocks capture both local peak shape and broader baseline structure.</li>
-        <li><span class="dot"></span> Attention-gated skip connections and squeeze-excite blocks calibrate which features pass through at each resolution.</li>
-        <li><span class="dot"></span> A spectral-attention module gives extra weight to the fingerprint region, where peak identity matters most.</li>
-        <li><span class="dot"></span> Trained with a composite loss covering peak alignment, curvature, slope, FFT topology, and amplitude fidelity — not just MSE.</li>
-      </ul>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <span class="feature-index">01</span>
+        <h3>Multi-scale context</h3>
+        <p>Dilated context blocks capture both local peak shape and broader baseline structure.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-index">02</span>
+        <h3>Attention-gated skips</h3>
+        <p>Skip connections and squeeze-excite blocks calibrate which features pass through at each resolution.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-index">03</span>
+        <h3>Spectral attention</h3>
+        <p>An attention module gives extra weight to the fingerprint region, where peak identity matters most.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-index">04</span>
+        <h3>Composite loss</h3>
+        <p>Trained on peak alignment, curvature, slope, FFT topology, and amplitude fidelity — not just MSE.</p>
+      </div>
     </div>
   </div>
 </section>
