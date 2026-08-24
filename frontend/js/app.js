@@ -1,3 +1,7 @@
+window.addEventListener("error", function (e) {
+  console.error("Spectrapur: uncaught error ->", e.message, e.filename + ":" + e.lineno);
+});
+
 (function () {
   "use strict";
 
