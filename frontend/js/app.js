@@ -29,6 +29,27 @@ window.addEventListener("error", function (e) {
   const downloadReportBtn = document.getElementById("download-report");
   const downloadPngBtn = document.getElementById("download-png");
   const toast = document.getElementById("toast");
+    // Fail loudly instead of silently: if any required element is missing
+  // (stale/partially-deployed HTML, a typo, etc.), show a visible banner
+  // and stop here so we never throw mid-way through wiring up listeners.
+  const required = {
+    dropzone, fileInput, fileChipHolder, pasteInput, sampleToggle, runBtn,
+    statusLine, heroSampleBtn, resultsSection, statGrid, peakTableBody,
+    downloadCsvBtn, downloadReportBtn, downloadPngBtn, toast,
+  };
+  const missing = Object.keys(required).filter((k) => !required[k]);
+  if (missing.length > 0) {
+    console.error("Spectrapur: missing expected page elements:", missing);
+    const banner = document.createElement("div");
+    banner.style.cssText =
+      "position:fixed;top:0;left:0;right:0;z-index:9999;background:#b3663f;color:#fff;" +
+      "font-family:sans-serif;font-size:13px;padding:10px 16px;text-align:center;";
+    banner.textContent =
+      "Spectrapur: page did not load correctly (missing: " + missing.join(", ") +
+      "). Hard-refresh the page (Ctrl/Cmd+Shift+R). If it persists, redeploy index.html and js/app.js together — they must match.";
+    document.body.prepend(banner);
+    return; // stop here; nothing below is safe to run
+  }
 
   let selectedFile = null;
   let lastResult = null;
